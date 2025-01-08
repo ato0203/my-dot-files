@@ -62,8 +62,16 @@ return {
     lspconfig.gopls.setup {
       capabilities = capabilities
     }
-    lspconfig.phpactor.setup {
-      capabilities = capabilities
+    lspconfig.intelephense.setup {
+      capabilities = capabilities,
+      settings = {
+        intelephense = {
+          files = {
+            filetypes = { 'php', 'blade', 'php_only' },
+            assosiations = { '*.php', '*.blade.php' }
+          }
+        }
+      }
     }
     lspconfig.pyright.setup {
       capabilities = capabilities
