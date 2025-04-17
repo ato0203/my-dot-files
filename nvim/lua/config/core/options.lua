@@ -10,7 +10,7 @@ vim.opt.timeoutlen = 300
 vim.opt.number = true
 vim.opt.scrolloff = 5              -- Scroll when closing to top or bottom of the screen
 vim.opt.textwidth = 120
-vim.opt.synmaxcol = 220            -- Don't try to syntax highlight minified files
+--vim.opt.synmaxcol = 220            -- Don't try to syntax highlight minified files
 -- disable netrw at the very start of your init.lua
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
