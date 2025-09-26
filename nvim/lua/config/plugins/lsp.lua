@@ -5,8 +5,6 @@ return {
     'hrsh7th/cmp-nvim-lsp',
   },
   config = function()
-    local lspconfig = require('lspconfig')
-
     local keymap = vim.keymap
 
     vim.api.nvim_create_autocmd('LspAttach', {
@@ -55,40 +53,17 @@ return {
       end,
     })
 
-    local capabilities = require('cmp_nvim_lsp').default_capabilities()
-    lspconfig.clangd.setup {
-      capabilities = capabilities
-    }
-    lspconfig.gopls.setup {
-      capabilities = capabilities
-    }
-    lspconfig.intelephense.setup {
-      capabilities = capabilities,
-      settings = {
-        intelephense = {
-          files = {
-            filetypes = { 'php', 'blade', 'php_only' },
-            assosiations = { '*.php', '*.blade.php' }
-          }
-        }
-      }
-    }
-    lspconfig.pyright.setup {
-      capabilities = capabilities
-    }
-    lspconfig.rust_analyzer.setup {
-      capabilities = capabilities
-    }
-    lspconfig.ts_ls.setup {
-      capabilities = capabilities
-    }
-    lspconfig.volar.setup {
-      capabilities = capabilities
-    }
-    lspconfig.lua_ls.setup {
+    local vimlsp = vim.lsp
+    vimlsp.enable('clangd')
+    vimlsp.enable('gopls')
+    vimlsp.enable('pyright')
+    vimlsp.enable('ts_ls')
+    vimlsp.enable('vue_ls')
+    vimlsp.enable('ruby_lsp')
+    vimlsp.config('lua_ls', {
       on_init = function(client)
         if client.workspace_folders then
-        local path = client.workspace_folders[1].name
+          local path = client.workspace_folders[1].name
           if vim.loop.fs_stat(path..'/.luarc.json') or vim.loop.fs_stat(path..'/.luarc.jsonc') then
             return
           end
@@ -98,7 +73,13 @@ return {
           runtime = {
             -- Tell the language server which version of Lua you're using
             -- (most likely LuaJIT in the case of Neovim)
-            version = 'LuaJIT'
+            version = 'LuaJIT',
+            -- Tell the language server how to find Lua modules same way as Neovim
+            -- (see `:h lua-module-load`)
+            path = {
+              'lua/?.lua',
+              'lua/?/init.lua',
+            },
           },
           -- Make the server aware of Neovim runtime files
           workspace = {
@@ -115,8 +96,9 @@ return {
         })
       end,
       settings = {
-      Lua = {}
+        Lua = {}
       }
-    }
+    })
+    vimlsp.enable('lua_ls')
   end
 }
