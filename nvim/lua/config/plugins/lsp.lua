@@ -60,6 +60,7 @@ return {
     vimlsp.enable('ts_ls')
     vimlsp.enable('vue_ls')
     vimlsp.enable('ruby_lsp')
+    vimlsp.enable('jdtls')
     vimlsp.config('lua_ls', {
       on_init = function(client)
         if client.workspace_folders then
